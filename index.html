@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="appExtract">
+<head lang="pt-br">
+	<meta charset="UTF-8">
+
+	<title>Teste S2it</title>
+
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	<link href="css/material.css" rel="stylesheet">
+
+</head>
+
+<body class="material-body" layout="row" ng-cloak ng-controller="CtrlExtract">
+  <div layout="column" tabIndex="-1" role="main" flex>
+    <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar">
+
+      <div class="md-toolbar-tools material-toolbar-tools" tabIndex="-1">
+        <div layout="row" flex class="fill-height">
+          <h2 class="md-toolbar-item md-breadcrumb md-headline">
+            <span hide-sm hide-md>Extrato de conta</span>
+          </h2>
+        </div>
+
+      </div>
+    </md-toolbar>
+
+    <md-content md-scroll-y layout="column" flex layout-align="center center"
+
+>
+      <div layout-padding flex="noshrink" class="material-ng-view">
+      	<div layout="column" layout-padding flex="100">
+            <h2>Digite a operação realizada:</h2>
+        </div>
+        <form  ng-cloak>
+          <div layout="row" layout-padding flex="100">
+
+                  <md-radio-group ng-model="data.type" >
+                      <div flex="30" layout="row">
+                        <md-radio-button value="Depósito" class="md-primary" checked> DEPÓSITO </md-radio-button>
+                        <md-radio-button value="Saque" > SAQUE </md-radio-button>
+                      </div>
+                  </md-radio-group>
+               <div flex="60">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Digite o valor da transação</label>
+                  <input type="number" name="value" ng-model="data.value" value="{{ data.value | currency: 'R$'}}" ng-required="true" />
+
+                  <div class="hint" ng-if="showHints">R$00,00</div>
+
+                  <div ng-messages="userForm.social.$error" ng-if="!showHints">
+                    <div ng-message="pattern">Por favor digite o valor.</div>
+                  </div>
+                </md-input-container>
+              </div>
+              <div flex="30">
+                <md-button class="md-raised md-primary" ng-click="addItem(data)">Adicionar</md-button>
+              </div>
+         </div>
+      </form>
+
+      <!-- <p>Selected Value: <span class="radioValue">{{ data.type }}</span> </p> -->
+
+      <table id="extract" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in list track by $index">
+            <td class="{{ item.color }}">{{ item.type }}</td>
+            <td class="{{ item.color }}">{{ item.value | currency: 'R$'}}</td>
+            <td><img src="img/icon_delete.svg" class="delete" ng-click="remoreItemList($index, item)"></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <h1>Total em conta: {{ valueExtract | currency: 'R$'}}</h1>
+
+    </div>
+
+    <div layout="row" flex="noshrink" layout-align="center center">
+        <div id="license-footer" flex>
+          Extrato de Conta &copy;2017 - Powered by S2it - Developed Joel Zanata
+        </div>
+      </div>
+  </md-content>
+
+
+
+  </div>
+
+</body>
+
+  <script src="js/lib/angular/angular.min.js"></script>
+  <script src="js/lib/angular/angular-route.min.js"></script>
+  <script src="js/lib/angular/angular-animate.min.js"></script>
+  <script src="js/lib/angular/angular-aria.min.js"></script>
+  <script src="js/lib/angular/angular-messages.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="js/lib/angular/angular-translate.min.js"></script>
+  <script src="js/app.js"></script>
+  <!-- <script src="js/snacksServices.js"></script> -->
+  <script src="js/extractCtrl.js"></script>
+
+</html>
